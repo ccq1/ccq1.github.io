@@ -2,21 +2,12 @@
 
 A modern, minimalist blog template for developers.
 
-**Design Inspiration**: This project's visual design was inspired by 
-modern code editors and developer tools, emphasizing clean layouts 
-and functional aesthetics.
 
-## Disclaimer
-This is an independent project and is not affiliated with or 
-endorsed by any specific company or product.
-
-## License
-MIT License - Free to use for personal and commercial projects
+<img width="2559" height="1261" alt="image" src="https://github.com/user-attachments/assets/1c0e92ad-cf49-4bf9-8641-880529133bed" />
 
 
-⚠️ **Disclaimer**: This is an independent, unofficial project. 
-It is NOT affiliated with, endorsed by, or connected to Zed Industries 
-or the Zed editor. "Zed" is a trademark of Zed Industries.
 
-This template was inspired by the visual design aesthetics of 
-modern developer tools.
+# This project is being continuously updated
+
+In the future, the article system will be improved
+

@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BLOG_TITLE, NAV_LINKS, GITHUB_URL } from '../constants';
 import { Github, Search, Command } from 'lucide-react';
+import SearchModal from './SearchModal';
 
 const Header: React.FC = () => {
   const location = useLocation();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // 监听 Cmd+K / Ctrl+K 快捷键
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <header className="w-full sticky top-0 z-50">
@@ -39,14 +54,17 @@ const Header: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-surface border border-zinc-300 dark:border-border rounded text-xs text-zinc-500 dark:text-secondary hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer group">
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-surface border border-zinc-300 dark:border-border rounded text-xs text-zinc-500 dark:text-secondary hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer group"
+          >
             <Search size={14} />
             <span>Search...</span>
             <div className="flex items-center gap-0.5 ml-2 text-[10px] text-zinc-500 group-hover:text-zinc-400">
                 <Command size={10} />
                 <span>K</span>
             </div>
-          </div>
+          </button>
           
           <a
             href={GITHUB_URL}
@@ -78,6 +96,9 @@ const Header: React.FC = () => {
           className="absolute z-20 size-2.5 rotate-45 rounded-[1px] border border-[#dbe8f9] dark:border-[#1d222b] bg-white dark:bg-black"
         ></div>
       </div>
+
+      {/* Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 };

@@ -6,9 +6,10 @@ import { UserCircle } from 'lucide-react';
 interface FeaturedCardProps {
   post: BlogPost;
   size?: 'large' | 'small';
+  showNewestBadge?: boolean;
 }
 
-const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large' }) => {
+const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large', showNewestBadge = false }) => {
   const isSmall = size === 'small';
   
   return (
@@ -53,12 +54,12 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large' }) => 
       <div className="w-full h-px bg-transparent dark:bg-transparent"></div>
 
       {/* Content Section */}
-      <div className={`h-fit shrink-0 ${isSmall ? 'p-2.5' : 'p-3.5'} flex flex-col gap-1 bg-amber-50/20 dark:bg-zinc-950/40 backdrop-blur-sm md:!flex-1`}>
+      <div className={`shrink-0 ${isSmall ? 'p-2.5 h-[130px]' : 'p-3.5 h-[145px]'} flex flex-col gap-1 bg-amber-50/20 dark:bg-zinc-950/40 backdrop-blur-sm`}>
         <h2 className={`truncate ${isSmall ? 'text-[0.8125rem]' : 'text-[0.9375rem]'} text-zinc-900 dark:text-zinc-100`}>
           {post.title}
         </h2>
         
-        <p className={`${isSmall ? 'text-xs line-clamp-1' : 'text-sm line-clamp-2'} leading-relaxed text-zinc-600 dark:text-zinc-400`}>
+        <p className={`${isSmall ? 'text-xs h-[2.4rem]' : 'text-sm h-[2.8rem]'} leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-2 overflow-hidden`}>
           {post.summary}
         </p>
 
@@ -69,7 +70,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large' }) => 
           </div>
           <div className="flex h-5 items-baseline gap-2">
             <p className="text-sm text-zinc-600 dark:text-zinc-500 font-mono text-[0.625rem] leading-5">{post.date}</p>
-            {!isSmall && (
+            {showNewestBadge && !isSmall && (
               <div className="rounded-xs h-[18px] px-1 pt-px w-fit flex items-center gap-1.5 shrink-0 border font-mono text-[0.625rem] leading-6 border-blue-300 bg-blue-200/10 text-blue-800 dark:border-blue-400/15 dark:bg-blue-800/5 dark:text-blue-200">
                 Newest
               </div>
