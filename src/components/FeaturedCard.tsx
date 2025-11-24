@@ -25,7 +25,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large', showN
           <defs>
             <pattern id={`diagonal-stripes-${post.id}`} width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
               <line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" strokeWidth="1.5"></line>
-            </pattern>2
+            </pattern>
           </defs>
           <rect width="100%" height="100%" fill={`url(#diagonal-stripes-${post.id})`}></rect>
         </svg>
@@ -34,7 +34,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large', showN
         <div
           className="absolute w-[95%] h-[95%]  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center  "
           style={{
-            backgroundImage: `url(${isSmall ? '/src/imgs/small_card.png' : '/src/imgs/big_card.png'})`,
+            backgroundImage: `url(${isSmall ? '/imgs/small_card.png' : '/imgs/big_card.png'})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
