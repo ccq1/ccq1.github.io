@@ -7,7 +7,21 @@ A modern, minimalist blog template for developers.
 
 
 
-# This project is being continuously updated
+# how to use
 
-In the future, the article system will be improved
+## use locally
+
+1. git clone this repo
+
+2. npm install
+
+3. npm dev
+
+## use github page 
+
+1. create your github page repo
+
+2. clone this repo and push your new repo
+
+3. add new post to src/posts
 

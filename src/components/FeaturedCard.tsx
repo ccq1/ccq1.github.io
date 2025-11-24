@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BlogPost } from '../types';
 import { UserCircle } from 'lucide-react';
 
+
 interface FeaturedCardProps {
   post: BlogPost;
   size?: 'large' | 'small';
@@ -24,16 +25,16 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large', showN
           <defs>
             <pattern id={`diagonal-stripes-${post.id}`} width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
               <line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" strokeWidth="1.5"></line>
-            </pattern>
+            </pattern>2
           </defs>
           <rect width="100%" height="100%" fill={`url(#diagonal-stripes-${post.id})`}></rect>
         </svg>
         
         {/* Background wall - 90% of parent */}
         <div
-          className="absolute w-[96%] h-[96%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-lg "
+          className="absolute w-[95%] h-[95%]  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center  "
           style={{
-            backgroundImage: `url(/imgs/${isSmall ? 'small_card.png' : 'big_card.png'})`,
+            backgroundImage: `url(${isSmall ? '/src/imgs/small_card.png' : '/src/imgs/big_card.png'})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
@@ -49,7 +50,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large', showN
                 width="3840"
                 height="2160"
                 decoding="async"
-                className="w-full h-full rounded-xs object-contain shadow-lg border border-transparent dark:border-transparent"
+                className="w-full h-full rounded-xs object-cover shadow-lg border border-transparent dark:border-transparent"
                 style={{ color: 'transparent' }}
               />
             ) : (
