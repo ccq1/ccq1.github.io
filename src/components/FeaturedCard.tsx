@@ -18,7 +18,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large', showN
       className="group w-full cursor-pointer flex flex-col rounded-sm border border-[#dbe8f9] dark:border-[#1d222b] hover:border-blue-300/50 dark:hover:border-blue-300/30 [box-shadow:hsl(218,_13%,_50%,_0.1)_0_-2px_0_0_inset] dark:[box-shadow:hsl(218,_13%,_70%,_0.05)_0_-2px_0_0_inset] hover:[box-shadow:8px_8px_0px_0px_rgba(59,130,246,0.1),_hsl(218,_13%,_50%,_0.1)_0_-2px_0_0_inset] dark:hover:[box-shadow:8px_8px_0px_0px_rgba(59,130,246,0.05),_hsl(218,_13%,_70%,_0.05)_0_-2px_0_0_inset] lg:active:translate-y-px lg:active:scale-[.99] transition-all"
     >
       {/* Image Section with diagonal stripe pattern background */}
-      <div className={`relative w-full dark:bg-zinc-800/5 bg-white/60 flex items-center justify-center ${isSmall ? 'p-5' : 'p-8'}`}>
+      <div className="relative w-full aspect-video dark:bg-zinc-800/5 bg-white/60">
         {/* SVG Diagonal Stripe Pattern Background */}
         <svg className="pointer-events-none absolute inset-0 size-full select-none text-blue-300 dark:text-blue-400/10">
           <defs>
@@ -29,25 +29,36 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large', showN
           <rect width="100%" height="100%" fill={`url(#diagonal-stripes-${post.id})`}></rect>
         </svg>
         
-        {/* Image Container with fixed aspect ratio */}
-        <div className="relative w-full aspect-video flex items-center justify-center">
-          {post.coverImage ? (
-            <img 
-              src={post.coverImage} 
-              alt={post.title}
-              loading="lazy"
-              width="3840"
-              height="2160"
-              decoding="async"
-              className="w-[90%] h-[90%] rounded-xs object-cover shadow-lg border border-transparent dark:border-transparent"
-              style={{ color: 'transparent' }}
-            />
-          ) : (
-            <div className="w-[90%] h-[90%] rounded-xs bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center shadow-lg border border-transparent dark:border-transparent">
-              <span className={`text-zinc-700 font-mono ${isSmall ? 'text-2xl' : 'text-4xl'}`}>./src</span>
-            </div>
-          )}
-        </div>
+        {/* Background wall - 90% of parent */}
+        <div
+          className="absolute w-[96%] h-[96%] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-lg "
+          style={{
+            backgroundImage: `url(/imgs/${isSmall ? 'small_card.png' : 'big_card.png'})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          {/* Image Container - 80% of background wall */}
+          <div className="w-4/5 h-4/5 flex items-center justify-center">
+            {post.coverImage ? (
+              <img
+                src={post.coverImage}
+                alt={post.title}
+                loading="lazy"
+                width="3840"
+                height="2160"
+                decoding="async"
+                className="w-full h-full rounded-xs object-contain shadow-lg border border-transparent dark:border-transparent"
+                style={{ color: 'transparent' }}
+              />
+            ) : (
+              <div className="w-full h-full rounded-xs bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center shadow-lg border border-transparent dark:border-transparent">
+                <span className={`text-zinc-700 font-mono ${isSmall ? 'text-2xl' : 'text-4xl'}`}>./src</span>
+              </div>
+            )}
+          </div>
+        </div>  
       </div>
 
       {/* Separator */}

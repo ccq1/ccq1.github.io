@@ -42,11 +42,11 @@ const Home: React.FC = () => {
   return (
     <div className="flex w-full min-h-screen">
       {/* Section 1: Left side - 2.5% */}
-      <section className="w-[2.5%] bg-[#f3f3ed] dark:bg-[#111216] border-r border-[#dbe8f9] dark:border-[#1d222b] transition-colors">
+      <section className="w-[3%] bg-[#f3f3ed] dark:bg-[#111216] border-r border-[#dbe8f9] dark:border-[#1d222b] transition-colors">
       </section>
 
       {/* Section 2: Main content - 95% */}
-      <section className="w-[95%] bg-[#fafaf7] dark:bg-[#131418] transition-colors pb-20">
+      <section className="w-[94%] bg-[#fafaf7] dark:bg-[#131418] transition-colors pb-20">
       
       {/* Page Header with Specific SVG Background */}
       <div className="relative w-full pt-20 pb-16 overflow-hidden bg-[#f7f7f3] dark:bg-[#121418] z-10">
@@ -65,8 +65,8 @@ const Home: React.FC = () => {
         </svg>
 
         <div className="relative z-10 text-center max-w-2xl mx-auto px-6">
-            <h2 className="text-4xl md:text-5xl font-serif text-zinc-900 dark:text-blue-100 mb-4 tracking-tight">From The Blog</h2>
-            <p className="text-lg text-zinc-600 dark:text-zinc-400 font-light">Keep up with news about development.</p>
+            <h2 className="text-4xl md:text-5xl font-serif text-zinc-900 dark:text-blue-300 mb-4 tracking-tight">From The Blog</h2>
+            <p className="text-lg text-zinc-600 dark:text-zinc-400 font-bold">Keep up with news about development.</p>
         </div>
       </div>
 
@@ -201,7 +201,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Section 3: Right side - 2.5% */}
-      <section className="w-[2.5%] bg-[#f3f3ed] dark:bg-[#111216] border-l border-[#dbe8f9] dark:border-[#1d222b] transition-colors">
+      <section className="w-[3%] bg-[#f3f3ed] dark:bg-[#111216] border-l border-[#dbe8f9] dark:border-[#1d222b] transition-colors">
       </section>
     </div>
   );
