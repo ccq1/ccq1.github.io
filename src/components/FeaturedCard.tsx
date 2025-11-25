@@ -64,9 +64,9 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ post, size = 'large', showN
 
       {/* Separator */}
       <div className="w-full h-px bg-transparent dark:bg-transparent"></div>
-
+   
       {/* Content Section */}
-      <div className={`shrink-0 ${isSmall ? 'p-2.5 h-[130px]' : 'p-3.5 h-[145px]'} flex flex-col gap-1 bg-amber-50/20 dark:bg-zinc-950/40 backdrop-blur-sm`}>
+      <div className={`shrink-0 ${isSmall ? 'p-2.5 h-[130px]' : 'p-3.5 h-[145px]'} flex flex-col gap-1 bg-[#f9f9f6] dark:bg-[#191b1f] backdrop-blur-sm`}>
         <h2 className={`truncate ${isSmall ? 'text-[0.8125rem]' : 'text-[0.9375rem]'} text-zinc-900 dark:text-zinc-100`}>
           {post.title}
         </h2>
