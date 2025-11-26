@@ -15,6 +15,9 @@ AI's 70%
 # Understanding the Code is Key
 "The really big difference is that you are keeping the human engineer firmly in control. You are responsible for thinking about architecture, reviewing the code, understanding every line. You have to make sure you're understanding what AI is generating for you, so you are on the hook for making sure the final product is secure, scalable, maintainable." — Addy Osmani
 
+![demo](https://private-user-images.githubusercontent.com/78813459/519157957-390aed16-11b3-4e2a-9f16-c2ec35c24e9b.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjQxNTc4ODksIm5iZiI6MTc2NDE1NzU4OSwicGF0aCI6Ii83ODgxMzQ1OS81MTkxNTc5NTctMzkwYWVkMTYtMTFiMy00ZTJhLTlmMTYtYzJlYzM1YzI0ZTliLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTExMjYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMTI2VDExNDYyOVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTI1MWY5NzJmOGM5OWY3YzFjMThjYjI3NzZiNjUzY2UzNDY1YThlNDM2MTIzOGYxOTQyMmYxN2VhZGZiYWJiMmUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.zvYyfphlRyQfhaoBebjHtg80iStKWmm5_LteKLDcwcY)
+
+
 "AI is a tool. If your name is on there, when that code is getting submitted, you are responsible for what you submitted. So you need to make sure that you're reviewing it." — Addy Osmani
 
 # Reality Check on Productivity
