@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { getPostBySlug, fetchMarkdownContent } from '../services/markdownService';
-import { ArrowLeft, BookOpenText, Milestone, Hash } from 'lucide-react';
+import { ArrowLeft, BookOpenText, Milestone, Hash, Copy, CopyCheck } from 'lucide-react';
 import { BlogPost } from '../types';
 import { BLOG_TITLE } from '../constants';
 import Divider from '../components/Divider';
@@ -18,12 +19,42 @@ const generateId = (text: string): string => {
   return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\u4e00-\u9fa5-]/g, '');
 };
 
+// 简单的hash函数
+const simpleHash = (str: string): number => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return hash;
+};
+
+// 给String原型添加hashCode方法
+String.prototype.hashCode = function() {
+  return simpleHash(this);
+};
+
 const PostView: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [content, setContent] = useState<string>('');
   const [post, setPost] = useState<BlogPost | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [toc, setToc] = useState<TocItem[]>([]);
+  const [copiedBlocks, setCopiedBlocks] = useState<Set<number>>(new Set());
+
+  const handleCopyCode = (code: string, blockIndex: number) => {
+    navigator.clipboard.writeText(code);
+    setCopiedBlocks(prev => new Set(prev).add(blockIndex));
+    
+    setTimeout(() => {
+      setCopiedBlocks(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(blockIndex);
+        return newSet;
+      });
+    }, 2000);
+  };
 
   useEffect(() => {
     const loadPost = async () => {
@@ -43,6 +74,7 @@ const PostView: React.FC = () => {
             return { id, label, level };
           });
           setToc(tocItems);
+          setCopiedBlocks(new Set());
         }
       }
       setLoading(false);
@@ -152,6 +184,7 @@ const PostView: React.FC = () => {
             <article className="mx-auto max-w-[700px] 2xl:w-full 2xl:mx-0">
 
             <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
               components={{
                 h1: ({node, children, ...props}) => {
                   const id = generateId(String(children));
@@ -207,7 +240,7 @@ const PostView: React.FC = () => {
                 p: ({node, ...props}) => <p className="leading-relaxed mb-4 text-zinc-900 dark:text-zinc-300" {...props} />,
                 ul: ({node, ...props}) => <ul className="list-disc list-outside ml-1.5 pl-4 *:pl-1.5 pb-2 marker:text-sm text-zinc-900 dark:text-zinc-300" {...props} />,
                 ol: ({node, ...props}) => <ol className="list-decimal list-outside ml-1.5 pl-5 *:pl-0 pb-2 marker:text-sm text-zinc-900 dark:text-zinc-300" {...props} />,
-                li: ({node, ...props}) => <li className="mb-2 break-words" {...props} />,
+                li: ({node, children, ...props}) => <li className="mb-2 break-words text-zinc-900 dark:text-zinc-300" {...props}>{children}</li>,
                 a: ({node, ...props}) => (
                   <a 
                     className="inline text-blue-600 dark:text-blue-300 underline decoration-blue-600/20 hover:decoration-blue-600/80 dark:decoration-blue-300/20 dark:hover:decoration-blue-400/80" 
@@ -219,20 +252,57 @@ const PostView: React.FC = () => {
                 blockquote: ({node, ...props}) => (
                   <blockquote className="pl-4 dark:text-zinc-400 text-zinc-600 italic border-l-2 border-zinc-300 dark:border-zinc-600 my-4" {...props} />
                 ),
-                code: ({node, inline, className, children, ...props}: any) => {
-                  if (inline) {
+                code: ({node, className, children, ...props}: any) => {
+                  // 检查是否是代码块（有className通常表示语法高亮的代码块）
+                  const isCodeBlock = className && className.startsWith('language-');
+                  
+                  if (isCodeBlock) {
+                    const language = className.replace('language-', '');
+                    
+                    // 为了给每个代码块分配唯一ID，我们需要在渲染时生成一个简单的标识符
+                    // 这里使用内容的hash作为简单的方法
+                    const blockId = String(children).slice(0, 10).replace(/\s/g, '_');
+                    const isCopied = copiedBlocks.has(blockId.hashCode());
+                    
                     return (
-                      <code className="-mx-0.5 py-0.5 px-1 font-mono text-sm bg-blue-600/10 dark:bg-blue-400/10 text-zinc-900 dark:text-zinc-100 rounded" {...props}>
-                        {children}
-                      </code>
+                      <figure data-rehype-pretty-code-figure="">
+                        <div className="relative my-2 p-2 font-mono text-sm rounded-sm dark:bg-zinc-900 bg-white border-blue-600/30 border dark:border-blue-400/20 mb-4">
+                          <pre className="flex w-full items-center overflow-x-auto pr-12">
+                            <code 
+                              className={className}
+                              data-language={language}
+                              data-theme="one-dark-pro light-plus"
+                              style={{ display: 'grid' }}
+                              {...props}
+                            >
+                              {children}
+                            </code>
+                          </pre>
+                          <button 
+                            type="button" 
+                            aria-label="Copy code button"
+                            className="absolute top-2 right-2 size-[26px] rounded-xs p-1.5 bg-white/90 hover:bg-blue-50 dark:bg-zinc-900 dark:hover:bg-gray-700/40 text-blue-600 dark:text-blue-300 mb-4"
+                            onClick={() => {
+                              const textContent = String(children).replace(/\n$/, '');
+                              handleCopyCode(textContent, blockId.hashCode());
+                            }}
+                          >
+                            {isCopied ? (
+                              <CopyCheck size={14} />
+                            ) : (
+                              <Copy size={14} />
+                            )}
+                          </button>
+                        </div>
+                      </figure>
                     );
                   }
+                  
+                  // 内联代码
                   return (
-                    <div className="relative my-2 p-2 font-mono text-sm rounded-sm dark:bg-zinc-900 bg-white border-blue-600/30 border dark:border-blue-400/20 mb-4">
-                      <pre className="flex w-full items-center overflow-x-auto pr-12">
-                        <code className="text-zinc-900 dark:text-zinc-300" {...props}>{children}</code>
-                      </pre>
-                    </div>
+                    <code className="-mx-0.5 py-0.5 px-1 font-mono text-sm bg-blue-600/10 dark:bg-blue-400/10 text-zinc-900 dark:text-zinc-100 rounded [overflow-wrap:_break-word]" {...props}>
+                      {children}
+                    </code>
                   );
                 },
                 img: ({node, ...props}) => (
@@ -249,6 +319,26 @@ const PostView: React.FC = () => {
                 ),
                 hr: ({node, ...props}) => (
                   <hr className="border-zinc-300 dark:border-zinc-600/20 w-full border-t my-8 h-px" {...props} />
+                ),
+                table: ({node, ...props}) => (
+                  <div className="overflow-x-auto my-4">
+                    <table className="min-w-full border-collapse border border-zinc-300 dark:border-zinc-600 rounded-sm" {...props} />
+                  </div>
+                ),
+                thead: ({node, ...props}) => (
+                  <thead className="bg-zinc-50 dark:bg-zinc-800/50" {...props} />
+                ),
+                tbody: ({node, ...props}) => (
+                  <tbody className="divide-y divide-zinc-200 dark:divide-zinc-700" {...props} />
+                ),
+                tr: ({node, ...props}) => (
+                  <tr className="hover:bg-zinc-50 dark:hover:bg-zinc-800/30" {...props} />
+                ),
+                th: ({node, ...props}) => (
+                  <th className="px-4 py-3 text-left text-sm font-medium text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-600" {...props} />
+                ),
+                td: ({node, ...props}) => (
+                  <td className="px-4 py-3 text-sm text-zinc-900 dark:text-zinc-300 border border-zinc-300 dark:border-zinc-600" {...props} />
                 ),
               }}
             >

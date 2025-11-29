@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { posts } from '../services/postsLoader';
-import { Search, ArrowRight, X } from 'lucide-react';
+import { Search, ArrowRight, X, Sun, Moon, Laptop } from 'lucide-react';
 import { BlogPost } from '../types';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   // 配置 Fuse.js
   const fuse = new Fuse(posts, {
@@ -33,7 +35,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (query.trim() === '') {
       setResults([]);
-      setSelectedIndex(0);
+      setSelectedIndex(-1);
       return;
     }
 
@@ -47,15 +49,26 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
       onClose();
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setSelectedIndex(prev => Math.min(prev + 1, results.length - 1));
+      const themeOptionsCount = 2; // Toggle theme + System theme
+      const maxIndex = query ? results.length + themeOptionsCount - 1 : themeOptionsCount - 1;
+      setSelectedIndex(prev => Math.min(prev + 1, maxIndex));
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setSelectedIndex(prev => Math.max(prev - 1, 0));
-    } else if (e.key === 'Enter' && results[selectedIndex]) {
+      setSelectedIndex(prev => Math.max(prev - 1, -1));
+    } else if (e.key === 'Enter') {
       e.preventDefault();
-      navigate(`/blog/${results[selectedIndex].slug}`);
-      onClose();
-      setQuery('');
+      if (selectedIndex >= 0 && selectedIndex < results.length && results[selectedIndex]) {
+        // 搜索结果
+        navigate(`/blog/${results[selectedIndex].slug}`);
+        onClose();
+        setQuery('');
+      } else if (selectedIndex === results.length) {
+        // Toggle between light and dark
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+      } else if (selectedIndex === results.length + 1) {
+        // System mode
+        setTheme('system');
+      }
     }
   };
 
@@ -135,6 +148,53 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
           ))}
+
+          {/* Theme Switch Section */}
+          <div className="border-t border-zinc-200 dark:border-zinc-800">
+            <div className="space-y-2 p-1">
+              <div className="px-2 pt-2 pb-1 text-xs font-mono tracking-wider uppercase text-zinc-600 dark:text-zinc-400">
+                Switch theme
+              </div>
+              
+              {/* Dynamic light/dark toggle button */}
+              <button
+                type="button"
+                onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+                className={`p-2 w-full rounded-sm flex items-center gap-3 text-sm text-zinc-900 dark:text-white transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800 ${
+                  selectedIndex >= 0 && selectedIndex === results.length
+                    ? 'bg-blue-50 dark:bg-blue-900/10'
+                    : ''
+                }`}
+                aria-label={`Turn ${resolvedTheme === 'dark' ? 'light' : 'dark'} mode on`}
+              >
+                {resolvedTheme === 'dark' ? (
+                  <>
+                    <Sun size={16} />
+                    Turn light mode on
+                  </>
+                ) : (
+                  <>
+                    <Moon size={16} />
+                    Turn dark mode on
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setTheme('system')}
+                className={`p-2 w-full rounded-sm flex items-center gap-3 text-sm text-zinc-900 dark:text-white transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800 ${
+                  selectedIndex >= 0 && selectedIndex === results.length + 1
+                    ? 'bg-blue-50 dark:bg-blue-900/10'
+                    : ''
+                }`}
+                aria-label="Follow the System's settings"
+              >
+                <Laptop size={16} />
+                Follow the System's settings
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Footer */}

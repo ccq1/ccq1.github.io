@@ -1,5 +1,6 @@
 import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -8,8 +9,9 @@ import About from './pages/About';
 
 const App: React.FC = () => {
   return (
-    <HashRouter>
-      <div className="min-h-screen flex flex-col font-sans selection:bg-blue-500/30 relative isolate bg-[#09090b] text-zinc-200">
+    <ThemeProvider>
+      <HashRouter>
+        <div className="min-h-screen flex flex-col font-sans selection:bg-blue-500/30 relative isolate bg-[#09090b] text-zinc-200">
         
         {/* The Global Grid Background */}
         <div className="fixed inset-0 w-full h-full pointer-events-none z-0">
@@ -31,6 +33,7 @@ const App: React.FC = () => {
         </div>
       </div>
     </HashRouter>
+    </ThemeProvider>
   );
 };
 
