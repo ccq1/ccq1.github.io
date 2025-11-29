@@ -8,7 +8,7 @@ authorAvatar: 'https://avatars.githubusercontent.com/u/78813459?v=4'
 readTime: '8 min'
 category: 'Agentic Engineering'
 tags: ['AI', 'Software Engineering', 'Craftsmanship', 'Development Tools']
-coverImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop'
+coverImage: 'https://private-user-images.githubusercontent.com/78813459/520415317-597fb4ab-4e8f-4e4e-89b3-75c09161d246.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjQ0NDUzMjcsIm5iZiI6MTc2NDQ0NTAyNywicGF0aCI6Ii83ODgxMzQ1OS81MjA0MTUzMTctNTk3ZmI0YWItNGU4Zi00ZTRlLTg5YjMtNzVjMDkxNjFkMjQ2LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTExMjklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMTI5VDE5MzcwN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTFiZGM5ZDk2MzM2MWQ5NThmYWViMzcyOWQyMjI5ZTU0YjkzNWU5ZWRhMDc2NmI3N2JiMzdjODRlOGQxYmU4ODgmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0._G6K2Ps3NWBsUPuq-DQlxZQX5l6ZujomqVXrsgy4FBM'
 ---
 
 # Introduction to Agentic Engineering
