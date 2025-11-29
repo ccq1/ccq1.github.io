@@ -9,7 +9,7 @@ export interface BlogPost {
   readTime: string;
   fileName: string; // The markdown file name in public/posts/
   tags: string[];
-  category: 'Tutorials' | 'Projects' | 'Thoughts' | 'Snippets';
+  category: 'Tutorials' | 'Projects' | 'Thoughts' | 'Snippets' | 'Agentic Engineering';
   featured?: boolean;
   coverImage?: string; // URL or CSS class for gradient
 }

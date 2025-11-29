@@ -13,6 +13,7 @@ const CATEGORIES = [
   { id: 'Projects', label: 'Projects' },
   { id: 'Thoughts', label: 'Thoughts' },
   { id: 'Snippets', label: 'Snippets' },
+  { id: 'Agentic Engineering', label: 'Agentic Engineering' },
 ];
 
 const Home: React.FC = () => {
